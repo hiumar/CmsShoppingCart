@@ -60,19 +60,55 @@ namespace CmsShoppingCart.Areas.Controllers
             return View(page);
         }
 
-        public async Task<IActionResult> Edit()
+        public async Task<IActionResult> Edit(int id)
         {
-            IQueryable<Page> pages = from p in _context.pages orderby p.Sorting select p;
-            List<Page> pagesList = await pages.ToListAsync();
+            Page page = await _context.pages.FindAsync(id);
+            if (page == null)
+            {
+                return NotFound();
+            }
 
-            return View(pagesList);
+            return View(page);
         }
-        public async Task<IActionResult> Delete()
-        {
-            IQueryable<Page> pages = from p in _context.pages orderby p.Sorting select p;
-            List<Page> pagesList = await pages.ToListAsync();
 
-            return View(pagesList);
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Edit(Page page)
+        {
+            if (ModelState.IsValid)
+            {
+                page.Slug = page.PageId == 1 ? "Home" : page.PageTitle.ToLower().Replace(" ", "-");
+                page.Slug = page.PageTitle.ToLower().Replace(" ", "-");
+                page.Sorting = 100;
+                var slug = _context.pages.Where(a=>a.PageId!=page.PageId).FirstOrDefaultAsync(a => a.Slug == page.Slug);
+                if (slug.Result != null)
+                {
+                    ModelState.AddModelError("", "This page is already exists");
+                    return View(page);
+                }
+                _context.pages.Update(page);
+                await _context.SaveChangesAsync();
+                TempData["Success"] = "Page has been edited";
+                return RedirectToAction("Edit",new { id=page.PageId});
+            }
+            return View(page);
+        }
+        public async Task<IActionResult> Delete(int id)
+        {
+            Page page = await _context.pages.FindAsync(id);
+            if(page == null)
+            {
+                TempData["Error"] = "This page does not exists";
+            }
+            else
+            {
+                _context.pages.Remove(page);
+                await _context.SaveChangesAsync();
+                TempData["Success"] = "Page has been removed";
+            }
+           
+
+            return RedirectToAction("Index");
         }
     }
 }
