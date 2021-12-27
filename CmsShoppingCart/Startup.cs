@@ -53,8 +53,8 @@ namespace CmsShoppingCart
             {
 
                 endpoints.MapControllerRoute(
-                    name: "areas",
-                    pattern: "{area:exist}/{controller=Home}/{action=Index}/{id?}");
+                    name: "admin",
+                    pattern: "{area:exists}/{controller=Pages}/{action=Index}");
 
                 endpoints.MapControllerRoute(
                     name: "default",
