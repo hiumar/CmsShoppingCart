@@ -23,6 +23,13 @@ a {
   background-color: #1b6ec2;
   border-color: #1861ac;
 }
+table.sorting tr:not(.home){
+    cursor:pointer;
+}
+.ui.state.highlight{
+    border:1px dashed #ccc;
+
+}
 
 /* Sticky footer styles
 -------------------------------------------------- */

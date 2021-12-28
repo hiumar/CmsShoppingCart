@@ -2,7 +2,7 @@
 
 @{
     ViewData["Title"] = "Index";
-    
+
 }
 
 <h1>Index</h1>
@@ -10,41 +10,60 @@
 <p>
     <a asp-action="Create">Create New</a>
 </p>
-<table class="table">
+<table class="table table-bordered table-hover sorting" id="pages">
     <thead>
-        <tr>
-            
+        <tr class="home">
+
             <th>
-              Title
+                Title
             </th>
             <th>
-              Slug
+                Slug
             </th>
-            
+
             <th></th>
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
-        <tr>
-           
-            <td>
-                @Html.DisplayFor(modelItem => item.PageTitle)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Slug)
-            </td>
-         
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.PageId">Edit</a>|
-                <a asp-action="Details" asp-route-id="@item.PageId">Details</a>|
-                @if (item.Slug != "home")
-                {
-                <a asp-action="Delete"  class="ConfirmDelete" asp-route-id="@item.PageId">Delete</a>
-                }
-               
-            </td>
-        </tr>
-}
+        @foreach (var item in Model)
+        {
+            <tr id="id_@item.PageId" class="@item.Slug">
+
+                <td>
+                    @Html.DisplayFor(modelItem => item.PageTitle)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Slug)
+                </td>
+
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.PageId">Edit</a>|
+                    <a asp-action="Details" asp-route-id="@item.PageId">Details</a>|
+                    @if (item.Slug != "home")
+                    {
+                        <a asp-action="Delete" class="ConfirmDelete" asp-route-id="@item.PageId">Delete</a>
+                    }
+
+                </td>
+            </tr>
+        }
     </tbody>
 </table>
+<script src="~/lib/jquery/dist/jquery.min.js"></script>
+<script src="~/lib/jqueryui/jquery-ui.js"></script>
+@section Scripts{
+    <script>
+        $("table#pages tbody").sortable({
+            items: "tr:not(.home)",
+            placeholder: "ui-state-highlight",
+            update: function () {
+                let id = $("table#pages tbody").sortable("serialize");
+                console.log(id);
+                let url = "/admin/pages/reorder";
+                $.post(url, id, function () { });
+
+
+            }
+        });
+    </script>
+}

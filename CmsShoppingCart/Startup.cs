@@ -26,6 +26,9 @@ namespace CmsShoppingCart
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllersWithViews();
+            services.AddRazorPages()
+        .AddRazorRuntimeCompilation();
+
             services.AddDbContext<CMSShoppingCartContext>(option=>option.UseSqlServer(Configuration.GetConnectionString("CMSShoppingCartContext")));
         }
 
@@ -44,7 +47,7 @@ namespace CmsShoppingCart
             }
             app.UseHttpsRedirection();
             app.UseStaticFiles();
-
+            
             app.UseRouting();
 
             app.UseAuthorization();

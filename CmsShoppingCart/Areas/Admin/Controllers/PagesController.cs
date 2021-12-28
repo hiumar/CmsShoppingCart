@@ -93,6 +93,22 @@ namespace CmsShoppingCart.Areas.Controllers
             }
             return View(page);
         }
+        [HttpPost]
+        public async Task<IActionResult> Reorder(int[] id)
+        {
+            int count = 1;
+            foreach (var pageId in id)
+            {
+                Page page = await _context.pages.FindAsync(pageId);
+                page.Sorting = count;
+                _context.Update(page);
+               await  _context.SaveChangesAsync();
+
+                count++;
+            }
+            return Ok();
+
+        }
         public async Task<IActionResult> Delete(int id)
         {
             Page page = await _context.pages.FindAsync(id);
