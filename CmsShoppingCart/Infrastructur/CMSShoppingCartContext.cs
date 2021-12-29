@@ -19,5 +19,6 @@ namespace CmsShoppingCart.Infrastructur
         }
 
         public DbSet<Page> pages { get; set; }
+        public DbSet<Categories> categories { get; set; }
     }
 }
