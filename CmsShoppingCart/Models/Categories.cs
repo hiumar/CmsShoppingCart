@@ -8,6 +8,7 @@ namespace CmsShoppingCart.Models
 {
     public class Categories
     {
+        [Key]
         public int Id { get; set; }
         [Required ,MinLength(2,ErrorMessage ="Minimum legth is 2")]
         [RegularExpression(@"^[a-zA-Z-]+$", ErrorMessage ="Only letter are allowed")]

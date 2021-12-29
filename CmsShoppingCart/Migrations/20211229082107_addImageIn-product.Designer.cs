@@ -3,14 +3,16 @@ using CmsShoppingCart.Infrastructur;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace CmsShoppingCart.Migrations
 {
     [DbContext(typeof(CMSShoppingCartContext))]
-    partial class CMSShoppingCartContextModelSnapshot : ModelSnapshot
+    [Migration("20211229082107_addImageIn-product")]
+    partial class addImageInproduct
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -87,7 +89,7 @@ namespace CmsShoppingCart.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<decimal>("Price")
+                    b.Property<decimal>("Prince")
                         .HasColumnType("decimal(18,2)");
 
                     b.Property<string>("Slug")
