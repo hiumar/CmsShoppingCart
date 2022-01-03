@@ -1,4 +1,4 @@
-﻿@model IEnumerable<CmsShoppingCart.Models.Product>
+﻿@model IEnumerable<Product>
 
 @{
     ViewData["Title"] = "Index";
@@ -9,57 +9,69 @@
 <p>
     <a asp-action="Create">Create New</a>
 </p>
-<table class="table">
-    <thead>
-        <tr>
-           
-            <th>
-                Name
-            </th>
-           
-            <th>
-                Description
-            </th>
-            <th>
-                Prince
-            </th>
-            <th>
-                Image
-            </th>
-            <th>
-                Category
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model) {
-        <tr>
-            
-            <td>
-                @item.Name
-            </td>
-          
-            <td>
-                @Html.DisplayFor(modelItem => item.Description)
-            </td>
-            <td>
-                @item.Price
-            </td>
-            <td>
-                @item.Image
-            </td>
-            <td>
-                @item.Categories
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a>|
-                <a asp-action="Details" asp-route-id="@item.Id">Details</a>|
+<div class="container container-fluid">
+    <table class="table">
+        <thead>
+            <tr>
 
-                <a asp-action="Delete" class="ConfirmDelete" asp-route-id="@item.Id">Delete</a>
+                <th>
+                    Name
+                </th>
 
-            </td>
-        </tr>
-}
-    </tbody>
-</table>
+                <th>
+                    Description
+                </th>
+                <th>
+                    Prince
+                </th>
+                <th>
+                    Image
+                </th>
+                <th>
+                    Category
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+
+                    <td>
+                        @item.Name
+                    </td>
+
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Description)
+                    </td>
+                    <td>
+                        @item.Price
+                    </td>
+                    <td>
+                        @item.Image
+                    </td>
+                    <td>
+                        @item.Categories.Name
+                    </td>
+                    <td>
+                        <a asp-action="Edit" asp-route-id="@item.Id">Edit</a>|
+                        <a asp-action="Details" asp-route-id="@item.Id">Details</a>|
+
+                        <a asp-action="Delete" class="ConfirmDelete" asp-route-id="@item.Id">Delete</a>
+
+                    </td>
+                </tr>
+            }
+        </tbody>
+        <tfoot>
+
+        </tfoot>
+
+
+    </table>
+    <div class="d-flex w-100 justify-content-center">
+        <pagination page-count="@ViewBag.TotalPages" page-target="/admin/product" page-number="@ViewBag.PageNumber" page-range="@ViewBag.PageRange"></pagination>
+    </div>
+</div>
+

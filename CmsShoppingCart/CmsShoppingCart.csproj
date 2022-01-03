@@ -10,6 +10,7 @@
 
   <ItemGroup>
     <PackageReference Include="CKEditor" Version="3.6.4" />
+    <PackageReference Include="Codehaks.Pagination" Version="1.0.0" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation" Version="5.0.0" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="5.0.0" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="5.0.0" />
@@ -19,6 +20,10 @@
     </PackageReference>
     <PackageReference Include="Microsoft.TestPlatform.ObjectModel" Version="17.0.0" />
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="5.0.2" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Controllers\" />
   </ItemGroup>
 
 </Project>

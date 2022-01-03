@@ -18,15 +18,20 @@ namespace CmsShoppingCart.Areas.Admin.Controllers
         {
         private readonly CMSShoppingCartContext _context;
         private readonly IWebHostEnvironment _webHostingh;
-        public ProductController(CMSShoppingCartContext context)
+        public ProductController(CMSShoppingCartContext context, IWebHostEnvironment webHostEnvironment)
         {
             _context = context;
+           _webHostingh = webHostEnvironment;
         }
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(int p=1)
         {
-            
+            int pageSize = 5;
+            var Product = _context.products.OrderByDescending(u => u.Id).Include(u => u.Categories).Skip((p - 1) * pageSize).Take(pageSize);
+            ViewBag.PageNumber = p;
+            ViewBag.PageRange = pageSize;
+            ViewBag.TotalPages = (int)Math.Ceiling((Decimal)_context.products.Count() / pageSize);
 
-            return View(await _context.products.OrderByDescending(u => u.Id).Include(u => u.Categories).ToListAsync());
+            return View(await Product.ToListAsync());
         }
 
         public IActionResult Create()
