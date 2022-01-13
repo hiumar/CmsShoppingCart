@@ -1,27 +1,32 @@
 ﻿@model CmsShoppingCart.Models.Product
 
 @{
-    ViewData["Title"] = "Create";
+    ViewData["Title"] = "Edit";
 }
 
-<h1>Create</h1>
+<h1>Edit</h1>
 
+<h4>Product</h4>
 <hr />
 <div class="row">
-    <div class="col-md-10">
-        <form asp-action="Create" enctype="multipart/form-data">
+    <div class="col-md-4">
+        <form asp-action="Edit" enctype="multipart/form-data">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-
-
+            <input type="hidden" asp-for="Id" />
+            <input type="hidden" asp-for="Image" />
             <div class="form-group">
                 <label asp-for="Name" class="control-label"></label>
                 <input asp-for="Name" class="form-control" />
                 <span asp-validation-for="Name" class="text-danger"></span>
             </div>
-
+            <div class="form-group">
+                <label asp-for="Slug" class="control-label"></label>
+                <input asp-for="Slug" class="form-control" />
+                <span asp-validation-for="Slug" class="text-danger"></span>
+            </div>
             <div class="form-group">
                 <label asp-for="Description" class="control-label"></label>
-                <textarea asp-for="Description" class="form-control"></textarea>
+                <input asp-for="Description" class="form-control" />
                 <span asp-validation-for="Description" class="text-danger"></span>
             </div>
             <div class="form-group">
@@ -29,10 +34,19 @@
                 <input asp-for="Price" class="form-control" />
                 <span asp-validation-for="Price" class="text-danger"></span>
             </div>
+
             <div class="form-group">
-                <label asp-for="Image" class="control-label"></label>
+                <label asp-for="Image" class="control-label">Current Image</label>
+
+                <img src="~/Media/Products/@Model.Image" width="200" alt="Alternate Text" />
+
+            </div>
+            <div class="form-group">
+                <label asp-for="Image" class="control-label">Current Image</label>
+
                 <input asp-for="ImageUpload" class="form-control" />
-                <img   src="" id="imagePreview"  style="margin-top:15px;"/>
+
+                <img src="" id="imagePreview" style="margin-top:15px;" />
                 <span asp-validation-for="ImageUpload" class="text-danger"></span>
             </div>
             <div class="form-group">
@@ -41,9 +55,8 @@
                 </select>
                 <span asp-validation-for="CategoryId" class="text-danger"></span>
             </div>
-            
             <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
+                <input type="submit" value="Save" class="btn btn-primary" />
             </div>
         </form>
     </div>
@@ -52,8 +65,6 @@
 <div>
     <a asp-action="Index">Back to List</a>
 </div>
-
-
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 
@@ -64,5 +75,4 @@
             readUlr(this);
         });
     </script>
-
 }

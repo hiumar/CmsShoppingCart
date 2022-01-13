@@ -77,5 +77,71 @@ namespace CmsShoppingCart.Areas.Admin.Controllers
         }
 
 
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Edit(Product product)
+        {
+            ViewBag.CategoryId = new SelectList(_context.categories.OrderBy(a => a.Sorting), "Id", "Name");
+            if (ModelState.IsValid)
+            {
+                product.Slug = product.Name.ToLower().Replace(" ", "-");
+                var slug = await _context.products.Where(u=>u.Id!=product.Id).FirstOrDefaultAsync(a => a.Slug == product.Slug);
+                if (slug != null)
+                {
+                    ModelState.AddModelError("", "This page is already exists");
+                    return View(product);
+                }
+                
+                if (product.ImageUpload != null)
+                {
+                    string Updir = Path.Combine(_webHostingh.WebRootPath, "Media/Products");
+                    if (!String.Equals(product.Image, "NoImage.png"))
+                    {
+                        string OldImagePath = Path.Combine(Updir, product.Image);
+                        if (System.IO.File.Exists(OldImagePath))
+                        {
+                            System.IO.File.Delete(OldImagePath);
+                        }
+                    }
+                   
+                    string   imageName = Guid.NewGuid().ToString() + "_" + product.ImageUpload.FileName;
+                    string FilePath = Path.Combine(Updir, imageName);
+                    FileStream fs = new FileStream(FilePath, FileMode.Create);
+                    await product.ImageUpload.CopyToAsync(fs);
+                    fs.Close();
+                    product.Image = imageName;
+                }
+               
+                _context.products.Update(product);
+                await _context.SaveChangesAsync();
+                TempData["Success"] = "Product has been edited";
+                return RedirectToAction("Index");
+            }
+            return View(product);
+        }
+
+
+        public async Task<IActionResult> Edit(int id)
+        {
+            Product product = await _context.products.FindAsync(id);
+            if (product == null)
+            {
+                return NotFound();
+            }
+            ViewBag.CategoryId = new SelectList(_context.categories.OrderBy(a => a.Sorting), "Id", "Name");
+            return View(product);
+        }
+        public async Task<IActionResult> Details(int id)
+        {
+            Product product = await _context.products.Include(a => a.Categories).FirstOrDefaultAsync(a => a.Id == id);
+            if (product == null)
+            {
+                return NotFound();
+            }
+
+            return View(product);
+        }
+
+
     }
 }
