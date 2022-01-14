@@ -142,6 +142,24 @@ namespace CmsShoppingCart.Areas.Admin.Controllers
             return View(product);
         }
 
+        public async Task<IActionResult> Delete(int id)
+        {
+            Product product = await _context.products.FindAsync(id);
+            if (product == null)
+            {
+                TempData["Error"] = "This page does not exists";
+            }
+            else
+            {
+                _context.products.Remove(product);
+                await _context.SaveChangesAsync();
+                TempData["Success"] = "Product has been removed";
+            }
+
+
+            return RedirectToAction("Index");
+        }
+
 
     }
 }
