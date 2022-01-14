@@ -60,6 +60,17 @@ namespace CmsShoppingCart
                 "{slug?}",
                 defaults: new {controller="Pages",action="Page"}
                 );
+                endpoints.MapControllerRoute(
+                "product",
+                "product/{categorySlug}",
+                defaults: new { controller = "Product", action = "GetProductByCategory" }
+                );
+
+                endpoints.MapControllerRoute(
+               "product",
+               "product/",
+               defaults: new { controller = "Product", action = "Index" }
+               );
 
                 endpoints.MapControllerRoute(
                     name: "admin",
@@ -67,7 +78,7 @@ namespace CmsShoppingCart
 
                 endpoints.MapControllerRoute(
                     name: "default",
-                    pattern: "{controller=Home}/{action=Index}/{id?}");
+                    pattern: "{controller=Product}/{action=Index}/{id?}");
             });
         }
     }

@@ -1,0 +1,33 @@
+﻿@model IEnumerable<Product>
+@{
+    ViewData["Title"] = "Product";
+}
+
+<h1 class="display-4 pb-5">@ViewBag.CategoryName</h1>
+
+<div class="row">
+
+
+    @foreach (var item in Model)
+    {
+        <div class="col-md-4">
+            <img src="~/Media/Products/@item.Image" class="img-fluid" alt="Alternate Text" />
+
+            <h4>@item.Name</h4>
+            <div>@Html.Raw(item.Description)</div>
+            <p>@item.Price.ToString("C2")</p>
+            <p>
+                <a href="" class="btn btn-primary"> Add to Card</a>
+            </p>
+        </div>
+    }
+
+    @if (ViewBag.TotalPages > 1)
+    {
+        <div class="d-flex w-100 justify-content-center">
+            <pagination page-count="@ViewBag.TotalPages" page-target="/product/@ViewBag.Slug" page-number="@ViewBag.PageNumber" page-range="@ViewBag.PageRange"></pagination>
+        </div>}
+
+</div>
+
+
