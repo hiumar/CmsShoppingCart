@@ -25,9 +25,13 @@ namespace CmsShoppingCart
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddMemoryCache();
+            services.AddSession(option=> {
+               // option.IdleTimeout = TimeSpan.FromMinutes(10);
+            });
             services.AddControllersWithViews();
             services.AddRazorPages()
-        .AddRazorRuntimeCompilation();
+           .AddRazorRuntimeCompilation();
 
             services.AddDbContext<CMSShoppingCartContext>(option=>option.UseSqlServer(Configuration.GetConnectionString("CMSShoppingCartContext")));
         }
@@ -47,7 +51,7 @@ namespace CmsShoppingCart
             }
             app.UseHttpsRedirection();
             app.UseStaticFiles();
-            
+            app.UseSession();
             app.UseRouting();
 
             app.UseAuthorization();
@@ -66,11 +70,6 @@ namespace CmsShoppingCart
                 defaults: new { controller = "Product", action = "GetProductByCategory" }
                 );
 
-                endpoints.MapControllerRoute(
-               "product",
-               "product/",
-               defaults: new { controller = "Product", action = "Index" }
-               );
 
                 endpoints.MapControllerRoute(
                     name: "admin",

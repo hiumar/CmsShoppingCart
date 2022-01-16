@@ -3,12 +3,12 @@
 
 <ul class="list-group">
     <li class="list-group-item">
-        <a class="nav-link text-dark" asp-area="" asp-controller="Product" >All Product</a>
+        <a class="nav-link text-dark" asp-area="" asp-controller="Product" asp-action="Index" >All Product</a>
 
     </li>
 
 
-</ul>
+
 @foreach (var item in Model)
 {
     
@@ -20,4 +20,4 @@
     
 
 }
-
+    </ul>

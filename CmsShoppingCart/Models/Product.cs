@@ -19,7 +19,7 @@ namespace CmsShoppingCart.Models
         [Required, MinLength(4, ErrorMessage = "Minimum legth is 4")]
         public string Description { get; set; }
         [Column(TypeName="decimal(18,2)")]
-        public double Price { get; set; }
+        public decimal Price { get; set; }
         
         public string Image { get; set; }
         [Display(Name ="Category")]
