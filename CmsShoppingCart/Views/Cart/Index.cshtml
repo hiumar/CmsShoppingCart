@@ -23,8 +23,8 @@
                 <td>@item.Quantity</td>
                 <td>
                     <a asp-action="Add" asp-route-id="@item.ProductId" class="btn btn-sm btn-primary">+</a>
-                    <a asp-action="Decrease" asp-route-id="@item.ProductId" class="btn btn-sm btn-success">-</a>
-                    <a asp-action="Remove" asp-route-id="@item.ProductId" class="btn btn-sm btn-danger">+</a>
+                    <a asp-action="Descreas" asp-route-id="@item.ProductId" class="btn btn-sm btn-success">-</a>
+                    <a asp-action="Remove" asp-route-id="@item.ProductId" class="btn btn-sm btn-danger">Remove</a>
 
                 </td>
                 <td>@item.Price.ToString("C2")</td>

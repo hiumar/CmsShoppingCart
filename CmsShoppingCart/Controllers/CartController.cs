@@ -42,5 +42,61 @@ namespace CmsShoppingCart.Controllers
             HttpContext.Session.SetJson("cart", cart);
             return Redirect("/Cart/Index");
         }
+
+        public IActionResult Descreas(int id)
+        {
+          
+            List<CartItemcs> cart = HttpContext.Session.Getjson<List<CartItemcs>>("cart") ?? new List<CartItemcs>();
+            CartItemcs cartItems = cart.Where(a => a.ProductId == id).FirstOrDefault();
+            if (cartItems.Quantity>1)
+            {
+                --cartItems.Quantity;
+            }
+            else
+            {
+                cart.RemoveAll(x => x.ProductId == id);
+            }
+            
+            if (cart.Count == 0) {
+                HttpContext.Session.Remove("cart");
+            }
+            else
+            {
+                HttpContext.Session.SetJson("cart", cart);
+            }
+            return Redirect("/Cart/Index");
+        }
+
+        public IActionResult Remove(int id)
+        {
+
+            List<CartItemcs> cart = HttpContext.Session.Getjson<List<CartItemcs>>("cart") ?? new List<CartItemcs>();
+            cart.RemoveAll(x => x.ProductId == id);
+          
+
+            if (cart.Count == 0)
+            {
+                HttpContext.Session.Remove("cart");
+            }
+            else
+            {
+                HttpContext.Session.SetJson("cart", cart);
+            }
+            return Redirect("/Cart/Index");
+        }
+
+        public IActionResult Clear(int id)
+        {
+
+           
+
+
+          
+                HttpContext.Session.Remove("cart");
+   
+            
+         
+            return Redirect("/Cart/Index");
+        }
     }
 }
