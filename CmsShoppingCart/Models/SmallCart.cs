@@ -3,11 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace CmsShoppingCart.Infrastructur
+namespace CmsShoppingCart.Models
 {
-    public class SmallCartViewModel
+    public class SmallCart
     {
         public int NumberOfItems { get; set; }
         public decimal TotalAmount { get; set; }
+
     }
 }

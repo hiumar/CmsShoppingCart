@@ -12,19 +12,22 @@ namespace CmsShoppingCart.Infrastructur
         public IViewComponentResult Invoke()
         {
             List<CartItemcs> cartItems = HttpContext.Session.Getjson<List<CartItemcs>>("cart");
-            SmallCartViewModel cartViewModel;
+            SmallCart cartViewModel = new SmallCart();
 
-            if(cartItems.Count==0 || cartItems == null)
+            if (cartItems != null)
             {
-                cartViewModel = null;
-            }
-            else
-            {
-                cartViewModel = new SmallCartViewModel()
+                if (cartItems.Count == 0 || cartItems == null)
                 {
-                    TotalAmount = cartItems.Sum(a => a.Price * a.Quantity),
-                    NumberOfItems = cartItems.Sum(a => a.Quantity)
-                };
+                    cartViewModel = null;
+                }
+                else
+                {
+                    cartViewModel = new SmallCart()
+                    {
+                        TotalAmount = cartItems.Sum(a => a.Price * a.Quantity),
+                        NumberOfItems = cartItems.Sum(a => a.Quantity)
+                    };
+                }
             }
             return View(cartViewModel);
         }
